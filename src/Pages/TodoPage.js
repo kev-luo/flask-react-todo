@@ -10,11 +10,11 @@ export default function TodoPage() {
           return response.json();
         }
       })
-      .then((data) => console.log(data));
+      .then((data) => setTodo(data));
   }, []);
   return (
     <>
-      <Card />
+      <Card listOfTodos={todo} />
     </>
   );
 }
