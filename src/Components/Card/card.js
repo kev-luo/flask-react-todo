@@ -1,10 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Card({ listOfTodos }) {
   return (
     <>
       {listOfTodos.map((todo) => {
-        return <h1 key={todo.id}>{todo.content}</h1>;
+        return (
+          <Link key={todo.id} to={`/${todo.id}`}>
+            <h1>{todo.content}</h1>
+          </Link>
+        );
       })}
     </>
   );
