@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import Delete from "../Components/Delete/delete";
 
 export default function Show() {
   const { id } = useParams();
@@ -16,7 +17,15 @@ export default function Show() {
   return (
     <div>
       {todo?.length > 0 &&
-        todo.map((data) => <div key={data.id}>{data.content}</div>)}
+        todo.map((data) => {
+          return (
+            <div key={data.id}>
+              <h1>{data.content}</h1>
+              <Delete id={data.id} />
+              <Link to="/">Back to Home</Link>
+            </div>
+          );
+        })}
     </div>
   );
 }
