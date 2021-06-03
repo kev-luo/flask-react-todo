@@ -4,6 +4,8 @@ import Form from "../Components/Form/form";
 
 export default function TodoPage() {
   const [todo, setTodo] = useState([]);
+  const [addTodo, setAddTodo] = useState("");
+
   useEffect(() => {
     fetch("/api")
       .then((response) => {
@@ -13,9 +15,32 @@ export default function TodoPage() {
       })
       .then((data) => setTodo(data));
   }, []);
+
+  function handleFormChange(inputValue) {
+    setAddTodo(inputValue);
+  }
+
+  function handleFormSubmit() {
+    fetch("/api/create", {
+      method: "POST",
+      body: JSON.stringify({
+        content: addTodo,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((message) => console.log(message));
+  }
+
   return (
     <>
-      <Form />
+      <Form
+        userInput={addTodo}
+        onFormChange={handleFormChange}
+        onFormSubmit={handleFormSubmit}
+      />
       <Card listOfTodos={todo} />
     </>
   );
