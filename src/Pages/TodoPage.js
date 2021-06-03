@@ -7,13 +7,7 @@ export default function TodoPage() {
   const [addTodo, setAddTodo] = useState("");
 
   useEffect(() => {
-    fetch("/api")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-      })
-      .then((data) => setTodo(data));
+    getLatestTodos();
   }, []);
 
   function handleFormChange(inputValue) {
@@ -31,7 +25,21 @@ export default function TodoPage() {
       },
     })
       .then((response) => response.json())
-      .then((message) => console.log(message));
+      .then((message) => {
+        console.log(message);
+        setAddTodo("");
+        getLatestTodos();
+      });
+  }
+
+  function getLatestTodos() {
+    fetch("/api")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => setTodo(data));
   }
 
   return (
